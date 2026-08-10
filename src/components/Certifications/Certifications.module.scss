@@ -1,0 +1,81 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.certs { background: $color-bg-secondary; }
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  margin-top: $space-xl;
+  max-width: 720px;
+}
+
+.badge {
+  @include holo-card($color-cyan);
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: $space-md $space-lg;
+  text-decoration: none;
+  transition: $transition;
+
+  &:hover {
+    transform: translateX(8px);
+  }
+
+  &.violet { @include holo-card($color-violet); }
+}
+
+.badgeIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: $border-radius-sm;
+  background: linear-gradient(135deg, rgba($color-cyan, 0.15), rgba($color-violet, 0.15));
+  border: 1px solid rgba($color-cyan, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: 0.8rem;
+  color: $color-cyan;
+  flex-shrink: 0;
+
+  .violet & {
+    background: linear-gradient(135deg, rgba($color-violet, 0.15), rgba($color-magenta, 0.15));
+    border-color: rgba($color-violet, 0.3);
+    color: $color-violet;
+  }
+}
+
+.badgeInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.badgeTitle {
+  font-family: $font-mono;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.badgeIssuer {
+  font-size: 0.75rem;
+  color: $color-text-dim;
+  font-family: $font-mono;
+  letter-spacing: 0.05em;
+}
+
+.arrow {
+  color: $color-cyan;
+  font-size: 1rem;
+  opacity: 0.5;
+  transition: opacity 0.3s, transform 0.3s;
+
+  .badge:hover & { opacity: 1; transform: translate(3px, -3px); }
+  .violet & { color: $color-violet; }
+}

@@ -1,0 +1,186 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.projects {
+  background: $color-bg;
+}
+
+.intro {
+  color: $color-text-muted;
+  max-width: 560px;
+  margin-bottom: $space-xl;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: $space-lg;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $space-md;
+  }
+}
+
+// ─── CARD ─────────────────────────────────────────────────
+.card {
+  @include holo-card($color-cyan);
+  padding: $space-lg;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  position: relative;
+
+  &.violet { @include holo-card($color-violet); }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover { transform: none !important; }
+  }
+}
+
+.cardGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.1s ease;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  flex-wrap: wrap;
+}
+
+.period {
+  font-family: $font-mono;
+  font-size: 0.68rem;
+  color: $color-text-dim;
+  letter-spacing: 0.05em;
+}
+
+.projectNum {
+  font-family: $font-display;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: rgba($color-cyan, 0.12);
+  line-height: 1;
+
+  .violet & { color: rgba($color-violet, 0.12); }
+}
+
+.titleBlock {
+  position: relative;
+  z-index: 1;
+}
+
+.cardTitle {
+  font-family: $font-display;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $color-text;
+  margin: 0 0 0.25rem;
+  transition: $transition;
+
+  .card:hover & { color: $color-cyan; }
+  .violet .card:hover & { color: $color-violet; }
+}
+
+.cardSubtitle {
+  font-family: $font-mono;
+  font-size: 0.78rem;
+  color: $color-cyan;
+  opacity: 0.8;
+  margin: 0;
+
+  .violet & { color: $color-violet; }
+}
+
+.cardDesc {
+  font-size: 0.88rem;
+  color: $color-text-muted;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: $space-sm;
+  border-top: 1px solid $color-border;
+  position: relative;
+  z-index: 1;
+}
+
+.viewDetails {
+  font-family: $font-mono;
+  font-size: 0.78rem;
+  color: $color-cyan;
+  transition: $transition;
+
+  .card:hover & { letter-spacing: 0.05em; }
+  .violet & { color: $color-violet; }
+}
+
+.ghLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  color: $color-text-dim;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  transition: $transition;
+
+  &:hover {
+    color: $color-cyan;
+    border-color: rgba($color-cyan, 0.5);
+  }
+}
+
+// ─── CORNER MARKS ─────────────────────────────────────────
+.corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: rgba($color-cyan, 0.5);
+  border-style: solid;
+  transition: border-color 0.3s;
+
+  .card:hover & { border-color: rgba($color-cyan, 0.9); }
+  .violet & {
+    border-color: rgba($color-violet, 0.5);
+    .card:hover & { border-color: rgba($color-violet, 0.9); }
+  }
+}
+
+.tl { top: 8px; left: 8px; border-width: 1.5px 0 0 1.5px; }
+.br { bottom: 8px; right: 8px; border-width: 0 1.5px 1.5px 0; }

@@ -1,0 +1,185 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: $z-modal;
+  background: rgba($color-bg, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-lg;
+  animation: fadeIn 0.25s ease;
+
+  @include mobile { padding: $space-sm; align-items: flex-end; }
+}
+
+.modal {
+  @include holo-card($color-cyan);
+  max-width: 700px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.violet { @include holo-card($color-violet); }
+
+  @include mobile {
+    max-height: 92vh;
+    border-radius: $border-radius $border-radius 0 0;
+  }
+
+  // Custom scrollbar
+  &::-webkit-scrollbar { width: 3px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba($color-cyan, 0.4); border-radius: 2px; }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $space-md;
+  padding: $space-lg $space-xl $space-md;
+
+  @include mobile { padding: $space-md; }
+}
+
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  flex-wrap: wrap;
+  margin-bottom: $space-sm;
+}
+
+.role {
+  @include hud-label($color-text-dim);
+  font-size: 0.7rem;
+}
+
+.period {
+  @include hud-label($color-text-dim);
+  font-size: 0.7rem;
+}
+
+.title {
+  font-family: $font-display;
+  font-size: 1.6rem;
+  font-weight: 700;
+  @include gradient-text($color-cyan, $color-violet);
+  margin: 0 0 0.3rem;
+}
+
+.subtitle {
+  font-family: $font-mono;
+  font-size: 0.85rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.closeBtn {
+  background: rgba($color-text, 0.05);
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  color: $color-text-muted;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: $transition;
+
+  &:hover {
+    color: $color-text;
+    border-color: rgba($color-cyan, 0.5);
+    background: rgba($color-cyan, 0.08);
+  }
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $color-border, transparent);
+  margin: 0 $space-xl;
+
+  @include mobile { margin: 0 $space-md; }
+}
+
+.body {
+  padding: $space-lg $space-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+
+  @include mobile { padding: $space-md; }
+}
+
+.section {}
+
+.sectionTitle {
+  @include hud-label($color-cyan);
+  font-size: 0.75rem;
+  margin-bottom: $space-sm;
+
+  .violet & { color: $color-violet; }
+}
+
+.desc {
+  color: $color-text-muted;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-sm;
+  font-size: 0.9rem;
+  color: $color-text-muted;
+  line-height: 1.6;
+}
+
+.hlBullet {
+  color: $color-cyan;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  margin-top: 0.2rem;
+
+  .violet & { color: $color-violet; }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+}
+
+.footer {
+  display: flex;
+  gap: $space-md;
+  padding: $space-md $space-xl $space-lg;
+  border-top: 1px solid $color-border;
+
+  @include mobile { padding: $space-md; flex-direction: column; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}

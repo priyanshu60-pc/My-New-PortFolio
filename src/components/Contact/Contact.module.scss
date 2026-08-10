@@ -1,0 +1,163 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.contact { background: $color-bg; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: $space-3xl;
+  margin-top: $space-xl;
+  align-items: start;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $space-xl;
+  }
+}
+
+// ─── INFO ─────────────────────────────────────────────────
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.intro {
+  font-size: 0.95rem;
+  color: $color-text-muted;
+  line-height: 1.8;
+}
+
+.contactItems {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.contactItem {
+  @include holo-card($color-cyan);
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: $space-md;
+  transition: $transition;
+
+  &:hover { transform: translateX(4px); }
+}
+
+.contactIcon {
+  font-size: 1.1rem;
+  color: $color-cyan;
+  width: 32px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.contactLabel {
+  @include hud-label($color-text-dim);
+  font-size: 0.65rem;
+  margin-bottom: 0.15rem;
+}
+
+.contactValue {
+  font-family: $font-mono;
+  font-size: 0.88rem;
+  color: $color-text;
+  text-decoration: none;
+  transition: $transition;
+
+  &:hover { color: $color-cyan; }
+}
+
+.socials {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.socialLink {
+  font-family: $font-mono;
+  font-size: 0.82rem;
+  color: $color-text-dim;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  transition: $transition;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid $color-border;
+
+  &:hover {
+    color: $color-cyan;
+    padding-left: 0.5rem;
+    border-bottom-color: rgba($color-cyan, 0.4);
+  }
+}
+
+// ─── FORM ─────────────────────────────────────────────────
+.formCard {
+  @include holo-card($color-violet);
+  padding: $space-xl;
+
+  @include mobile { padding: $space-lg; }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-md;
+
+  @include mobile { grid-template-columns: 1fr; }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  @include hud-label($color-violet);
+  font-size: 0.68rem;
+}
+
+.input {
+  background: rgba($color-bg, 0.6);
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  padding: 0.75rem 1rem;
+  font-family: $font-mono;
+  font-size: 0.875rem;
+  color: $color-text;
+  outline: none;
+  transition: $transition;
+  width: 100%;
+
+  &::placeholder { color: $color-text-dim; }
+
+  &:focus {
+    border-color: rgba($color-violet, 0.7);
+    box-shadow: 0 0 0 3px rgba($color-violet, 0.1);
+    background: rgba($color-bg, 0.8);
+  }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.submitBtn {
+  width: 100%;
+  justify-content: center;
+  margin-top: $space-sm;
+  font-size: 0.875rem !important;
+}

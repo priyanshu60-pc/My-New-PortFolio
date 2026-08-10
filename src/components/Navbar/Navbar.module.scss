@@ -1,0 +1,156 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: $z-navbar;
+  padding: 1.25rem 0;
+  transition: $transition-slow;
+
+  &.scrolled {
+    background: rgba($color-bg, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid $color-border;
+    padding: 0.875rem 0;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+
+  @include mobile { padding: 0 $space-md; }
+}
+
+.brand {
+  font-family: $font-display;
+  font-size: 1.4rem;
+  font-weight: 900;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: auto;
+  transition: $transition;
+
+  &:hover .brandPc { text-shadow: $glow-cyan; }
+  &:hover .brandDot { text-shadow: $glow-magenta; }
+}
+
+.brandPc {
+  @include gradient-text($color-cyan, $color-violet);
+  transition: text-shadow 0.3s ease;
+}
+
+.brandDot {
+  color: $color-magenta;
+  transition: text-shadow 0.3s ease;
+}
+
+.links {
+  display: flex;
+  list-style: none;
+  gap: $space-lg;
+  align-items: center;
+
+  @include tablet { display: none; }
+}
+
+.link {
+  font-family: $font-mono;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: $color-text-muted;
+  cursor: pointer;
+  transition: $transition;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+
+  &:hover, &.active {
+    color: $color-cyan;
+    text-shadow: 0 0 8px rgba($color-cyan, 0.5);
+  }
+}
+
+.linkIndex {
+  color: $color-magenta;
+  font-size: 0.68rem;
+  opacity: 0.75;
+}
+
+.resumeBtn {
+  font-size: 0.75rem !important;
+  padding: 0.5rem 1.25rem !important;
+
+  @include tablet { display: none; }
+}
+
+// ─── BURGER ───────────────────────────────────────────────
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+
+  @include tablet { display: flex; }
+
+  span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: $color-cyan;
+    transition: $transition;
+    transform-origin: left center;
+  }
+
+  &.open {
+    span:nth-child(1) { transform: rotate(45deg) translateY(-1px); }
+    span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    span:nth-child(3) { transform: rotate(-45deg) translateY(1px); }
+  }
+}
+
+// ─── MOBILE DRAWER ────────────────────────────────────────
+.drawer {
+  max-height: 0;
+  overflow: hidden;
+  background: rgba($color-bg, 0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid $color-border;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+  ul {
+    list-style: none;
+    padding: $space-md $space-lg $space-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &.drawerOpen { max-height: 400px; }
+}
+
+.drawerLink {
+  display: block;
+  padding: 0.75rem 0;
+  font-family: $font-mono;
+  font-size: 0.9rem;
+  color: $color-text-muted;
+  border-bottom: 1px solid $color-border;
+  cursor: pointer;
+  transition: $transition;
+  text-decoration: none;
+
+  &:hover { color: $color-cyan; padding-left: 0.75rem; }
+}

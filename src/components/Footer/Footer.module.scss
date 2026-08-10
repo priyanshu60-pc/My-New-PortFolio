@@ -1,0 +1,96 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.footer {
+  background: $color-bg-secondary;
+  border-top: 1px solid $color-border;
+  padding: $space-xl 0 $space-lg;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-lg;
+  margin-bottom: $space-lg;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-md;
+  }
+}
+
+.brand {
+  font-family: $font-display;
+  font-size: 1.3rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.brandPc { @include gradient-text($color-cyan, $color-violet); }
+.brandDot { color: $color-magenta; }
+
+.nav {
+  display: flex;
+  gap: $space-lg;
+  flex-wrap: wrap;
+
+  @include mobile { gap: $space-md; }
+}
+
+.navLink {
+  font-family: $font-mono;
+  font-size: 0.8rem;
+  color: $color-text-dim;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover { color: $color-cyan; }
+}
+
+.socials {
+  display: flex;
+  gap: $space-md;
+
+  a {
+    font-family: $font-mono;
+    font-size: 0.8rem;
+    color: $color-text-dim;
+    text-decoration: none;
+    transition: $transition;
+
+    &:hover { color: $color-cyan; }
+  }
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $color-border, transparent);
+  margin-bottom: $space-lg;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-md;
+}
+
+.copyright {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: $color-text-dim;
+}
+
+.emailLink {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: $color-text-dim;
+  text-decoration: none;
+  transition: $transition;
+
+  &:hover { color: $color-cyan; }
+}

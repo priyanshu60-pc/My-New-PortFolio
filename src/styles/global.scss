@@ -1,0 +1,236 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ─── GOOGLE FONTS ─────────────────────────────────────────
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+// ─── CSS CUSTOM PROPERTIES ────────────────────────────────
+:root {
+  --color-bg: #{$color-bg};
+  --color-bg-secondary: #{$color-bg-secondary};
+  --color-cyan: #{$color-cyan};
+  --color-violet: #{$color-violet};
+  --color-magenta: #{$color-magenta};
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --color-border: #{$color-border};
+  --font-display: #{$font-display};
+  --font-mono: #{$font-mono};
+  --font-body: #{$font-body};
+}
+
+// ─── RESET & BASE ─────────────────────────────────────────
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: $color-bg;
+  color: $color-text;
+  font-family: $font-body;
+  font-size: $size-body;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none;
+
+  @include mobile {
+    cursor: auto;
+  }
+}
+
+::selection {
+  background: rgba($color-cyan, 0.25);
+  color: $color-cyan;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient($color-cyan, $color-violet);
+  border-radius: 2px;
+}
+
+// ─── TYPOGRAPHY ───────────────────────────────────────────
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-display;
+  color: $color-text;
+  line-height: 1.2;
+}
+
+a {
+  color: $color-cyan;
+  text-decoration: none;
+  transition: $transition;
+
+  &:hover {
+    color: lighten($color-cyan, 10%);
+  }
+}
+
+p { color: $color-text-muted; }
+
+img { max-width: 100%; display: block; }
+
+// ─── LAYOUT UTILS ─────────────────────────────────────────
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+
+  @include mobile {
+    padding: 0 $space-md;
+  }
+}
+
+.section {
+  padding: $space-3xl 0;
+  position: relative;
+
+  @include mobile {
+    padding: $space-2xl 0;
+  }
+}
+
+.section-label {
+  @include hud-label;
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin-bottom: $space-md;
+
+  &::before {
+    content: '//';
+    color: $color-magenta;
+    font-weight: 700;
+  }
+}
+
+.section-title {
+  @include section-heading;
+}
+
+// ─── BUTTONS ──────────────────────────────────────────────
+.btn-primary {
+  @include btn-base;
+  background: linear-gradient(135deg, rgba($color-cyan, 0.15) 0%, rgba($color-violet, 0.15) 100%);
+  color: $color-cyan;
+  border: 1px solid rgba($color-cyan, 0.5);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba($color-cyan, 0.25), rgba($color-violet, 0.25));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-cyan;
+    box-shadow: $glow-cyan;
+    transform: translateY(-2px);
+
+    &::before { opacity: 1; }
+  }
+
+  &:active { transform: translateY(0); }
+}
+
+.btn-secondary {
+  @include btn-base;
+  background: transparent;
+  color: $color-text-muted;
+  border: 1px solid $color-border;
+
+  &:hover {
+    color: $color-violet;
+    border-color: rgba($color-violet, 0.6);
+    box-shadow: $glow-violet;
+    transform: translateY(-2px);
+  }
+}
+
+.btn-cta {
+  @include btn-base;
+  background: linear-gradient(135deg, $color-magenta, darken($color-violet, 5%));
+  color: $color-text;
+  border: 1px solid rgba($color-magenta, 0.4);
+
+  &:hover {
+    box-shadow: $glow-magenta;
+    transform: translateY(-2px) scale(1.02);
+    opacity: 0.95;
+  }
+}
+
+// ─── TECH CHIPS ───────────────────────────────────────────
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 2rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  background: rgba($color-cyan, 0.08);
+  border: 1px solid rgba($color-cyan, 0.25);
+  color: $color-cyan;
+  transition: $transition;
+
+  &:hover {
+    background: rgba($color-cyan, 0.15);
+    border-color: rgba($color-cyan, 0.5);
+  }
+
+  &.violet {
+    background: rgba($color-violet, 0.08);
+    border-color: rgba($color-violet, 0.25);
+    color: $color-violet;
+
+    &:hover {
+      background: rgba($color-violet, 0.15);
+      border-color: rgba($color-violet, 0.5);
+    }
+  }
+}
+
+// ─── AOS OVERRIDES ────────────────────────────────────────
+[data-aos] {
+  pointer-events: none;
+
+  &.aos-animate {
+    pointer-events: auto;
+  }
+}
+
+// ─── REDUCED MOTION ───────────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,113 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.skills { position: relative; }
+
+.intro {
+  color: $color-text-muted;
+  font-size: 1rem;
+  max-width: 560px;
+  line-height: 1.75;
+  margin-bottom: $space-xl;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $space-lg;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $space-md;
+  }
+}
+
+// ─── CARD ─────────────────────────────────────────────────
+.card {
+  @include holo-card($color-cyan);
+  padding: $space-lg;
+  position: relative;
+  cursor: default;
+  transition: $transition;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  &.violet {
+    @include holo-card($color-violet);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin-bottom: $space-md;
+}
+
+.cardIcon {
+  font-family: $font-mono;
+  font-size: 1rem;
+  color: $color-cyan;
+  flex-shrink: 0;
+
+  .violet & { color: $color-violet; }
+}
+
+.cardTitle {
+  font-family: $font-mono;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-cyan;
+  margin: 0;
+
+  .violet & { color: $color-violet; }
+}
+
+.headerLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, currentColor, transparent);
+  opacity: 0.2;
+  margin-left: $space-sm;
+
+  .cyan & { color: $color-cyan; }
+  .violet & { color: $color-violet; }
+}
+
+// ─── CHIPS ────────────────────────────────────────────────
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+}
+
+.skillChip {
+  transition: $transition;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// ─── CORNER DECORATION ────────────────────────────────────
+.cardCorner {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  border-right: 1.5px solid rgba($color-cyan, 0.35);
+  border-bottom: 1.5px solid rgba($color-cyan, 0.35);
+  border-radius: 0 0 3px 0;
+  transition: border-color 0.3s;
+
+  .card:hover & { border-color: rgba($color-cyan, 0.7); }
+  .violet & {
+    border-color: rgba($color-violet, 0.35);
+    .card:hover & { border-color: rgba($color-violet, 0.7); }
+  }
+}

@@ -1,0 +1,193 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.about { background: $color-bg; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: $space-3xl;
+  align-items: start;
+  margin-top: $space-xl;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $space-xl;
+  }
+}
+
+// ─── PROFILE CARD ─────────────────────────────────────────
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+
+  @include tablet { align-items: center; }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+
+  @include tablet { width: 220px; height: 220px; }
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: $border-radius;
+  position: relative;
+  z-index: 2;
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.imageGlow {
+  position: absolute;
+  inset: -2px;
+  border-radius: calc($border-radius + 2px);
+  background: linear-gradient(135deg, $color-cyan, $color-violet, $color-magenta);
+  z-index: 1;
+  opacity: 0.7;
+  filter: blur(1px);
+}
+
+.imageBorder {
+  position: absolute;
+  inset: 0;
+  border-radius: $border-radius;
+  border: 1px solid rgba($color-cyan, 0.4);
+  z-index: 3;
+  pointer-events: none;
+}
+
+// HUD corner marks
+%corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  z-index: 4;
+  border-color: $color-cyan;
+  border-style: solid;
+}
+
+.corner { @extend %corner; }
+
+.tl { top: -1px;    left: -1px;    border-width: 2px 0 0 2px; }
+.tr { top: -1px;    right: -1px;   border-width: 2px 2px 0 0; }
+.bl { bottom: -1px; left: -1px;    border-width: 0 0 2px 2px; }
+.br { bottom: -1px; right: -1px;   border-width: 0 2px 2px 0; }
+
+// ─── STATS ────────────────────────────────────────────────
+.stats {
+  @include holo-card($color-cyan);
+  padding: $space-md $space-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 280px;
+
+  @include tablet { width: 220px; }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.statValue {
+  font-family: $font-display;
+  font-size: 1.3rem;
+  font-weight: 700;
+  @include gradient-text($color-cyan, $color-violet);
+}
+
+.statLabel {
+  @include hud-label($color-text-dim);
+  font-size: 0.62rem;
+}
+
+.statDivider {
+  width: 1px;
+  height: 32px;
+  background: $color-border;
+}
+
+// ─── BIO ──────────────────────────────────────────────────
+.bio {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.eduCard {
+  @include holo-card($color-violet);
+  padding: $space-md $space-lg;
+  display: flex;
+  align-items: flex-start;
+  gap: $space-md;
+}
+
+.eduIcon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.eduDegree {
+  font-family: $font-mono;
+  font-size: 0.95rem;
+  color: $color-text;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.eduSpec {
+  font-size: 0.85rem;
+  color: $color-violet;
+  margin-bottom: 0.4rem;
+}
+
+.eduMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: $color-text-muted;
+}
+
+.eduPeriod, .eduCgpa {
+  background: rgba($color-violet, 0.1);
+  border: 1px solid rgba($color-violet, 0.25);
+  border-radius: 1rem;
+  padding: 0.15rem 0.6rem;
+  color: $color-violet;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+}
+
+.bioText {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: $color-text-muted;
+}
+
+.interestsLabel {
+  @include hud-label($color-magenta);
+  margin-bottom: $space-sm;
+}
+
+.interestChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+}
+
+.quickLinks {
+  display: flex;
+  gap: $space-md;
+  flex-wrap: wrap;
+}

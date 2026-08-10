@@ -1,0 +1,92 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: $z-preloader;
+  background: $color-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include scanline;
+}
+
+.inner {
+  text-align: center;
+  width: min(400px, 90vw);
+}
+
+.brand {
+  font-family: $font-display;
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 2.5rem;
+  animation: glitch 2.5s steps(1) infinite;
+}
+
+.brandPc {
+  @include gradient-text($color-cyan, $color-violet);
+}
+
+.brandDot {
+  color: $color-magenta;
+  text-shadow: $glow-magenta;
+}
+
+.scanline {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $color-cyan, transparent);
+  margin-bottom: 2rem;
+  animation: scan 1.5s ease-in-out infinite;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 2px;
+  background: rgba($color-cyan, 0.1);
+  border-radius: 1px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progressBar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, $color-cyan, $color-violet);
+  border-radius: 1px;
+  box-shadow: 0 0 8px $color-cyan;
+  transition: width 0.05s linear;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  @include hud-label($color-text-muted);
+  font-size: 0.7rem;
+}
+
+.pct {
+  @include hud-label($color-cyan);
+  font-size: 0.75rem;
+}
+
+@keyframes scan {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.3); }
+  50%       { opacity: 1;   transform: scaleX(1);   }
+}
+
+@keyframes glitch {
+  0%, 90%, 100% { text-shadow: none; }
+  91%  { text-shadow: 2px 0 $color-magenta, -2px 0 $color-cyan; }
+  92%  { text-shadow: -2px 0 $color-magenta, 2px 0 $color-cyan; }
+  93%  { text-shadow: none; }
+  94%  { text-shadow: 2px 0 $color-cyan, -2px 0 $color-violet; }
+  95%  { text-shadow: none; }
+}

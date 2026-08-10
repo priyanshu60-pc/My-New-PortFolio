@@ -1,0 +1,123 @@
+@use 'variables' as *;
+
+// ─── GLOW BORDER ──────────────────────────────────────────
+@mixin glow-border($color: $color-cyan, $glow-color: $color-cyan-glow) {
+  border: 1px solid rgba($color, 0.3);
+  box-shadow: 0 0 0 1px rgba($color, 0.05),
+              inset 0 0 20px rgba($color, 0.03);
+  transition: $transition;
+
+  &:hover {
+    border-color: rgba($color, 0.7);
+    box-shadow: 0 0 0 1px rgba($color, 0.15),
+                0 0 20px rgba($color, 0.2),
+                0 0 40px rgba($color, 0.08),
+                inset 0 0 20px rgba($color, 0.05);
+  }
+}
+
+// ─── HOLOGRAPHIC CARD ─────────────────────────────────────
+@mixin holo-card($accent: $color-cyan) {
+  background: $color-bg-card;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: $border-radius;
+  @include glow-border($accent);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba($accent, 0.6) 50%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+// ─── GRADIENT TEXT ────────────────────────────────────────
+@mixin gradient-text($from: $color-cyan, $to: $color-violet) {
+  background: linear-gradient(135deg, $from 0%, $to 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ─── SCANLINE ─────────────────────────────────────────────
+@mixin scanline {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 240, 255, 0.012) 2px,
+      rgba(0, 240, 255, 0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// ─── HUD LABEL ────────────────────────────────────────────
+@mixin hud-label($color: $color-cyan) {
+  font-family: $font-mono;
+  font-size: $size-small;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $color;
+  opacity: 0.85;
+}
+
+// ─── SECTION HEADING ──────────────────────────────────────
+@mixin section-heading {
+  font-family: $font-display;
+  font-size: $size-section-h;
+  font-weight: 700;
+  @include gradient-text($color-cyan, $color-violet);
+  margin-bottom: $space-md;
+}
+
+// ─── RESPONSIVE ───────────────────────────────────────────
+@mixin mobile {
+  @media (max-width: #{$bp-md}) { @content; }
+}
+
+@mixin tablet {
+  @media (max-width: #{$bp-lg}) { @content; }
+}
+
+@mixin desktop {
+  @media (min-width: #{$bp-lg}) { @content; }
+}
+
+// ─── BUTTON BASE ──────────────────────────────────────────
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: 0.75rem 1.75rem;
+  border-radius: $border-radius-sm;
+  font-family: $font-mono;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: $transition;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+}

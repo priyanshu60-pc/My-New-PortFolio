@@ -1,0 +1,214 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+// ─── ATMOSPHERE ───────────────────────────────────────────
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 70% at 70% 50%,
+    transparent 0%,
+    rgba($color-bg, 0.65) 60%,
+    rgba($color-bg, 0.9) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba($color-cyan, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($color-cyan, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 1;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 80% at 30% 50%, black 30%, transparent 80%);
+}
+
+// ─── CONTENT ──────────────────────────────────────────────
+.content {
+  position: relative;
+  z-index: $z-content;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include mobile { padding: 0 $space-md; }
+}
+
+.textBlock {
+  max-width: 700px;
+
+  @include mobile { max-width: 100%; }
+}
+
+// ─── STATUS BADGE ─────────────────────────────────────────
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  background: rgba($color-cyan, 0.07);
+  border: 1px solid rgba($color-cyan, 0.25);
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: $color-cyan;
+  margin-bottom: $space-lg;
+  opacity: 0;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $color-cyan;
+  box-shadow: 0 0 8px $color-cyan;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+// ─── HEADING ──────────────────────────────────────────────
+.name {
+  font-family: $font-display;
+  font-size: $size-hero-title;
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: $space-md;
+  opacity: 0;
+  color: $color-text;
+  text-shadow: 0 0 60px rgba($color-cyan, 0.12);
+}
+
+.nameAccent {
+  @include gradient-text($color-cyan, $color-violet);
+}
+
+// ─── TITLE ────────────────────────────────────────────────
+.title {
+  font-family: $font-mono;
+  font-size: $size-hero-sub;
+  color: $color-text-muted;
+  margin-bottom: $space-md;
+  opacity: 0;
+  line-height: 1.5;
+}
+
+.titleLine {
+  color: $color-magenta;
+  font-weight: 700;
+  margin-right: 0.25rem;
+}
+
+// ─── TAGLINE ──────────────────────────────────────────────
+.tagline {
+  font-size: 1rem;
+  color: $color-text-dim;
+  max-width: 540px;
+  line-height: 1.7;
+  margin-bottom: $space-xl;
+  opacity: 0;
+
+  @include mobile { margin-bottom: $space-lg; }
+}
+
+// ─── CTAs ─────────────────────────────────────────────────
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+  margin-bottom: $space-xl;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-sm;
+    margin-bottom: $space-lg;
+
+    button, a { width: 100%; justify-content: center; }
+  }
+}
+
+// ─── SOCIALS ──────────────────────────────────────────────
+.socials {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+
+  a {
+    color: $color-text-dim;
+    transition: $transition;
+    display: flex;
+    padding: 0.5rem;
+    border-radius: $border-radius-sm;
+
+    &:hover {
+      color: $color-cyan;
+      transform: translateY(-3px);
+      text-shadow: $glow-cyan;
+    }
+  }
+}
+
+// ─── SCROLL HINT ──────────────────────────────────────────
+.scrollHint {
+  position: absolute;
+  right: $space-lg;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-sm;
+  z-index: $z-content;
+
+  @include mobile { display: none; }
+}
+
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 60px;
+  background: linear-gradient($color-cyan, transparent);
+  animation: scrollDown 2s ease-in-out infinite;
+}
+
+.scrollLabel {
+  @include hud-label($color-text-dim);
+  font-size: 0.65rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+// ─── ANIMATIONS ───────────────────────────────────────────
+@keyframes pulse {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 8px $color-cyan; }
+  50%       { opacity: 0.4; box-shadow: 0 0 2px $color-cyan; }
+}
+
+@keyframes scrollDown {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statusDot { animation: none; opacity: 1; }
+  .scrollLine { animation: none; }
+  .name, .title, .tagline, .statusBadge, .ctas { opacity: 1; }
+}
