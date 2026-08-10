@@ -13,7 +13,7 @@ export default function About() {
           <div className={styles.profileCard} data-aos="fade-right" data-aos-duration="700">
             <div className={styles.imageWrapper}>
               <img
-                src="/profile.jpg"
+                src="https://lh3.googleusercontent.com/d/1cG1gN2rlZs8g47u5HYESaDBjn_kyFjiF"
                 alt="Priyanshu Chakraborty — AI/ML Engineer"
                 className={styles.photo}
                 width="300"

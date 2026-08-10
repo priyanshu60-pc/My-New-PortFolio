@@ -10,7 +10,7 @@ export const personal = {
   email: 'priyanshuchakraborty60@gmail.com',
   phone: '+91-8509554213',
   location: 'Kolkata, India',
-  resumeUrl: '/resume.pdf',
+  resumeUrl: 'https://drive.google.com/uc?export=download&id=1AoYUQmljk0vkeN1BVk6MjsTWt-kg7ibF',
   links: {
     linkedin: 'https://linkedin.com/in/priyanshu-chakraborty-159b0a271',
     github: 'https://github.com/priyanshu60-pc',
