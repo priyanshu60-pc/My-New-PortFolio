@@ -1,6 +1,6 @@
 # My New Portfolio
 
-Live demo: https://priyanshu60-pc.github.io/My-New-PortFolio/
+Live demo: [https://priyanshu60-pc.github.io/My-New-PortFolio/](https://my-new-port-folio-two.vercel.app)
 
 A personal portfolio built with React + Vite showcasing projects, skills, and contact information. The project uses modern frontend tooling for fast development and builds.
 
