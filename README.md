@@ -1,16 +1,53 @@
-# React + Vite
+# My New Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Live demo: https://priyanshu60-pc.github.io/My-New-PortFolio/
 
-Currently, two official plugins are available:
+A personal portfolio built with React + Vite showcasing projects, skills, and contact information. The project uses modern frontend tooling for fast development and builds.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Table of contents
+- Demo
+- Features
+- Technologies
+- Getting started
+- Development
+- Build & Deploy
+- Contributing
+- License & Contact
 
-## React Compiler
+## Demo
+Live demo: https://priyanshu60-pc.github.io/My-New-PortFolio/
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
+- Responsive portfolio layout
+- Project gallery with links and descriptions
+- Contact section / contact form
+- Fast development with Vite and HMR
 
-## Expanding the Oxlint configuration
+## Technologies
+- JavaScript, React
+- Vite
+- SCSS for styling
+- HTML/CSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Getting started
+1. Clone the repo:
+   git clone https://github.com/priyanshu60-pc/My-New-PortFolio.git
+2. Install dependencies:
+   npm install
+3. Run locally:
+   npm run dev
+4. Open the local dev server URL shown in the terminal (usually http://localhost:5173).
+
+## Build & Deploy
+- Build for production:
+  npm run build
+- Preview production build:
+  npm run preview
+- Deploy: You can deploy to GitHub Pages, Netlify, Vercel, or any static host. This project is deployed to GitHub Pages at the live URL above.
+
+## Contributing
+Contributions and improvements are welcome. Open an issue or submit a pull request with a clear description of changes.
+
+## License & Contact
+- License: (add license here, e.g., MIT)
+- Contact: (add your email or social link)
