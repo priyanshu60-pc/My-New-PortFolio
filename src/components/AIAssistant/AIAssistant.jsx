@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { askGeminiAssistant, getGeminiApiKey, saveGeminiApiKey } from '../../utils/geminiService';
+import { askGeminiAssistant } from '../../utils/geminiService';
 import styles from './AIAssistant.module.scss';
 
 export default function AIAssistant() {
@@ -8,68 +8,25 @@ export default function AIAssistant() {
     {
       id: 1,
       sender: 'bot',
-      text: "👋 Hi! I'm **Priyanshu AI**, powered by **Google Gemini** & **RAG** (Retrieval-Augmented Generation).\n\nAsk me anything about Priyanshu's projects, AI/ML skills, Java backend experience, or availability!",
+      text: "👋 Hi! I'm **Priyanshu AI**, powered by a private OpenAI-backed RAG assistant.\n\nAsk me anything about Priyanshu's projects, AI/ML skills, Java backend experience, or availability!",
       sources: ['Profile & Contact Info', 'Technical Skills Overview'],
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
   const [inputQuery, setInputQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [showKeyModal, setShowKeyModal] = useState(false);
-  const [apiKeyInput, setApiKeyInput] = useState('');
-  const [keyError, setKeyError] = useState('');
-  const [hasCustomKey, setHasCustomKey] = useState(false);
 
   const messagesEndRef = useRef(null);
 
-  // Auto-scroll to bottom on new message
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isOpen, isLoading]);
 
-  useEffect(() => {
-    const key = getGeminiApiKey();
-    setHasCustomKey(!!key);
-  }, []);
-
-  const handleOpenToggle = () => {
-    setIsOpen(!isOpen);
-    const key = getGeminiApiKey();
-    if (!key) {
-      setShowKeyModal(true);
-    }
-  };
-
-  const handleSaveKey = (e) => {
-    e?.preventDefault();
-    if (!apiKeyInput.trim()) {
-      setKeyError('Please enter a valid Gemini API key.');
-      return;
-    }
-    saveGeminiApiKey(apiKeyInput.trim());
-    setHasCustomKey(true);
-    setShowKeyModal(false);
-    setApiKeyInput('');
-    setKeyError('');
-  };
-
-  const handleClearKey = () => {
-    saveGeminiApiKey(null);
-    setHasCustomKey(false);
-    setShowKeyModal(true);
-  };
-
   const handleSend = async (queryToSend = null) => {
     const query = queryToSend || inputQuery;
     if (!query.trim() || isLoading) return;
-
-    const currentKey = getGeminiApiKey();
-    if (!currentKey) {
-      setShowKeyModal(true);
-      return;
-    }
 
     const userMsg = {
       id: Date.now(),
@@ -93,19 +50,13 @@ export default function AIAssistant() {
       };
       setMessages((prev) => [...prev, botMsg]);
     } catch (err) {
-      console.error(err);
-      if (err.message === 'API_KEY_MISSING' || err.message === 'API_KEY_INVALID') {
-        setShowKeyModal(true);
-        setKeyError('Your Gemini API key appears to be invalid or missing. Please enter a valid key.');
-      } else {
-        const errorMsg = {
-          id: Date.now() + 1,
-          sender: 'bot',
-          text: `⚠️ Oops! Encountered an error: ${err.message || 'Unable to connect to Gemini API'}. Please try again.`,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        };
-        setMessages((prev) => [...prev, errorMsg]);
-      }
+      const errorMsg = {
+        id: Date.now() + 1,
+        sender: 'bot',
+        text: `⚠️ The AI service is unavailable right now. Please make sure the server is running and the private OpenAI key is configured in the backend environment.`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages((prev) => [...prev, errorMsg]);
     } finally {
       setIsLoading(false);
     }
@@ -127,11 +78,10 @@ export default function AIAssistant() {
 
   return (
     <div className={styles.container}>
-      {/* Floating Action Button */}
       {!isOpen && (
         <button
           className={styles.fab}
-          onClick={handleOpenToggle}
+          onClick={() => setIsOpen(true)}
           title="Open Priyanshu AI Assistant"
           aria-label="Open AI Assistant"
         >
@@ -151,28 +101,19 @@ export default function AIAssistant() {
         </button>
       )}
 
-      {/* Chat Drawer / Window */}
       {isOpen && (
         <div className={styles.chatDrawer}>
-          {/* Header */}
           <div className={styles.header}>
             <div className={styles.headerLeft}>
               <div className={styles.avatar}>🤖</div>
               <div>
                 <h3 className={styles.title}>Priyanshu AI</h3>
                 <span className={styles.subtitle}>
-                  <span className={styles.onlineDot} /> RAG + Gemini 2.5
+                  <span className={styles.onlineDot} /> RAG + private OpenAI
                 </span>
               </div>
             </div>
             <div className={styles.headerActions}>
-              <button
-                className={styles.iconBtn}
-                onClick={() => setShowKeyModal(true)}
-                title="Gemini API Key Settings"
-              >
-                🔑
-              </button>
               <button
                 className={styles.iconBtn}
                 onClick={() => setIsOpen(false)}
@@ -183,61 +124,6 @@ export default function AIAssistant() {
             </div>
           </div>
 
-          {/* API Key Modal Popup */}
-          {showKeyModal && (
-            <div className={styles.modalOverlay}>
-              <div className={styles.modal}>
-                <h4>Gemini API Key</h4>
-                <p>
-                  Enter your Google Gemini API key to interact with Priyanshu AI.
-                  Your key is stored locally in your browser session.
-                </p>
-                <form onSubmit={handleSaveKey}>
-                  <input
-                    type="password"
-                    placeholder="AIzaSy..."
-                    value={apiKeyInput}
-                    onChange={(e) => setApiKeyInput(e.target.value)}
-                    className={styles.keyInput}
-                  />
-                  {keyError && <div className={styles.errorText}>{keyError}</div>}
-                  <div className={styles.modalBtns}>
-                    <button type="submit" className={styles.saveBtn}>
-                      Save Key
-                    </button>
-                    {hasCustomKey && (
-                      <button
-                        type="button"
-                        className={styles.clearBtn}
-                        onClick={handleClearKey}
-                      >
-                        Remove Key
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      className={styles.cancelBtn}
-                      onClick={() => setShowKeyModal(false)}
-                    >
-                      Close
-                    </button>
-                  </div>
-                </form>
-                <div className={styles.apiHelp}>
-                  Need a key?{' '}
-                  <a
-                    href="https://aistudio.google.com/app/apikey"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Get a free Gemini API Key from Google AI Studio ↗
-                  </a>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Messages Body */}
           <div className={styles.messagesContainer}>
             {messages.map((msg) => (
               <div
@@ -283,7 +169,6 @@ export default function AIAssistant() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Suggestions */}
           {messages.length <= 2 && !isLoading && (
             <div className={styles.quickPrompts}>
               <span className={styles.quickLabel}>Suggested questions:</span>
@@ -301,7 +186,6 @@ export default function AIAssistant() {
             </div>
           )}
 
-          {/* Input Bar */}
           <div className={styles.inputArea}>
             <textarea
               className={styles.textarea}
