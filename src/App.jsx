@@ -13,6 +13,7 @@ import Projects     from './components/Projects/Projects';
 import Certifications from './components/Certifications/Certifications';
 import Contact      from './components/Contact/Contact';
 import Footer       from './components/Footer/Footer';
+import AIAssistant  from './components/AIAssistant/AIAssistant';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -50,6 +51,7 @@ export default function App() {
           <Contact />
         </main>
         <Footer />
+        <AIAssistant />
       </div>
     </>
   );
