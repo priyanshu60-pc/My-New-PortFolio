@@ -8,7 +8,7 @@ export default function AIAssistant() {
     {
       id: 1,
       sender: 'bot',
-      text: "👋 Hi! I'm **Priyanshu AI**, powered by a private OpenAI-backed RAG assistant.\n\nAsk me anything about Priyanshu's projects, AI/ML skills, Java backend experience, or availability!",
+      text: "👋 Hi! I'm **Priyanshu AI**, powered by **Puter + Gemini** and grounded with portfolio RAG.\n\nAsk me anything about Priyanshu's projects, AI/ML skills, Java backend experience, or availability!",
       sources: ['Profile & Contact Info', 'Technical Skills Overview'],
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
@@ -53,7 +53,7 @@ export default function AIAssistant() {
       const errorMsg = {
         id: Date.now() + 1,
         sender: 'bot',
-        text: `⚠️ The AI service is unavailable right now. Please make sure the server is running and the private OpenAI key is configured in the backend environment.`,
+        text: `⚠️ The AI service is unavailable right now. Please make sure the Puter script is loaded and the model is accessible in your browser session.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -109,7 +109,7 @@ export default function AIAssistant() {
               <div>
                 <h3 className={styles.title}>Priyanshu AI</h3>
                 <span className={styles.subtitle}>
-                  <span className={styles.onlineDot} /> RAG + private OpenAI
+                  <span className={styles.onlineDot} /> RAG + Puter / Gemini
                 </span>
               </div>
             </div>

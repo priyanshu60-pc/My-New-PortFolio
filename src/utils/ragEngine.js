@@ -1,4 +1,4 @@
-import { personal, about, skills, projects, certifications } from '../data/content';
+import { personal, about, skills, projects, certifications } from '../data/content.js';
 
 // Knowledge base chunk generation from portfolio data
 export const KNOWLEDGE_BASE = [

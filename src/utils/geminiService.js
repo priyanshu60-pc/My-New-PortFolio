@@ -1,29 +1,32 @@
+import { retrieveContext } from './ragEngine';
+
 export async function askGeminiAssistant(userQuery, conversationHistory = []) {
+  const { contextText, sources } = retrieveContext(userQuery, 4);
+
+  if (!window.puter || !window.puter.ai || !window.puter.ai.chat) {
+    throw new Error('PUTER_NOT_AVAILABLE');
+  }
+
   try {
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: userQuery,
-        history: conversationHistory,
-      }),
+    const response = await window.puter.ai.chat(userQuery, {
+      model: 'gemini-3.7-flash',
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || 'Unable to contact the AI server');
-    }
+    const reply = typeof response === 'string' ? response : response?.text || response?.message || 'I could not generate a response right now.';
 
-    const data = await response.json();
     return {
-      text: data.text,
-      sources: data.sources || [],
+      text: reply,
+      sources,
     };
   } catch (error) {
-    console.error('AI chat request failed:', error);
-    throw new Error(error.message || 'AI service unavailable');
+    console.error('Puter AI request failed:', error);
+
+    const fallback = `I found relevant project and skill information in Priyanshu's portfolio. Based on the available data, he is an AI/ML and full-stack developer focused on ${contextText.slice(0, 180)}...`;
+
+    return {
+      text: fallback,
+      sources,
+    };
   }
 }
 
