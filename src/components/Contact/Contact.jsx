@@ -4,6 +4,13 @@ import { personal } from '../../data/content';
 
 const CONTACT_ITEMS = [
   {
+    id: 'whatsapp',
+    icon: '💬',
+    label: 'WhatsApp',
+    value: personal.phone,
+    href: `https://wa.me/918509554213?text=Hi%20Priyanshu!%20I%20found%20you%20through%20your%20portfolio.`,
+  },
+  {
     id: 'email',
     icon: '✉',
     label: 'Email',
@@ -53,7 +60,7 @@ export default function Contact() {
           <div className={styles.info} data-aos="fade-right" data-aos-duration="700">
             <p className={styles.intro}>
               I'm actively seeking opportunities in AI/ML engineering and full-stack development.
-              Whether it's a project, internship, or full-time role — I'd love to connect.
+              Whether it's a project, internship, or full-time role — I'd love to connect. Reach out via WhatsApp, email, or phone!
             </p>
 
             <div className={styles.contactItems}>
@@ -63,7 +70,14 @@ export default function Contact() {
                   <div>
                     <div className={styles.contactLabel}>{item.label}</div>
                     {item.href ? (
-                      <a href={item.href} className={styles.contactValue}>{item.value}</a>
+                      <a 
+                        href={item.href} 
+                        className={styles.contactValue}
+                        target={item.id === 'whatsapp' ? '_blank' : undefined}
+                        rel={item.id === 'whatsapp' ? 'noopener noreferrer' : undefined}
+                      >
+                        {item.value}
+                      </a>
                     ) : (
                       <span className={styles.contactValue}>{item.value}</span>
                     )}
