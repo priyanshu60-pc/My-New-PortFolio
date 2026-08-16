@@ -13,7 +13,6 @@ import Projects     from './components/Projects/Projects';
 import Certifications from './components/Certifications/Certifications';
 import Contact      from './components/Contact/Contact';
 import Footer       from './components/Footer/Footer';
-import AiChat      from './components/AiChat/AiChat';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -51,7 +50,6 @@ export default function App() {
           <Contact />
         </main>
         <Footer />
-        <AiChat />
       </div>
     </>
   );
