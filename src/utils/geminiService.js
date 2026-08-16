@@ -1,18 +1,52 @@
 import { retrieveContext } from './ragEngine';
 
+function extractSafeReply(payload) {
+  if (!payload) return 'I could not generate a response right now.';
+
+  if (typeof payload === 'string') return payload;
+
+  if (Array.isArray(payload)) {
+    return payload
+      .map((item) => extractSafeReply(item))
+      .filter(Boolean)
+      .join('\n');
+  }
+
+  if (typeof payload === 'object') {
+    if (typeof payload.text === 'string' && payload.text.trim()) return payload.text;
+    if (typeof payload.message === 'string' && payload.message.trim()) return payload.message;
+    if (typeof payload.content === 'string' && payload.content.trim()) return payload.content;
+    if (Array.isArray(payload.content)) {
+      return payload.content
+        .map((part) => extractSafeReply(part))
+        .filter(Boolean)
+        .join('\n');
+    }
+    if (payload.output && typeof payload.output === 'string') return payload.output;
+    if (payload.answer && typeof payload.answer === 'string') return payload.answer;
+  }
+
+  return 'I could not generate a response right now.';
+}
+
 export async function askGeminiAssistant(userQuery, conversationHistory = []) {
   const { contextText, sources } = retrieveContext(userQuery, 4);
 
-  if (!window.puter || !window.puter.ai || !window.puter.ai.chat) {
+  if (!window.puter || !window.puter.ai || typeof window.puter.ai.chat !== 'function') {
     throw new Error('PUTER_NOT_AVAILABLE');
   }
 
   try {
-    const response = await window.puter.ai.chat(userQuery, {
-      model: 'gemini-3.7-flash',
-    });
+    const response = await Promise.race([
+      window.puter.ai.chat(userQuery, {
+        model: 'gemini-2.5-flash',
+      }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('AI_TIMEOUT')), 20000)
+      ),
+    ]);
 
-    const reply = typeof response === 'string' ? response : response?.text || response?.message || 'I could not generate a response right now.';
+    const reply = extractSafeReply(response);
 
     return {
       text: reply,
