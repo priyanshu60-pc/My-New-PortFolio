@@ -62,13 +62,13 @@ export const skills = [
     category: 'AI & ML',
     icon: '⚡',
     color: 'violet',
-    items: ['TensorFlow', 'Scikit-learn', 'Pandas', 'NumPy', 'CNN', 'OpenAI API'],
+    items: ['TensorFlow', 'Scikit-learn', 'Pandas', 'NumPy', 'CNN', 'OpenAI API','Machine Learning','LLMs','RaG',],
   },
   {
     category: 'Developer Tools',
     icon: '◎',
     color: 'cyan',
-    items: ['Git', 'GitHub', 'Docker', 'Firebase', 'Vercel', 'VS Code', 'Jupyter Notebook'],
+    items: ['Git', 'GitHub', 'Firebase', 'Vercel', 'VS Code', 'Jupyter Notebook'],
   },
 ];
 
@@ -146,7 +146,7 @@ export const certifications = [
     badge: 'HR',
     type: 'Certified Specialist',
     color: 'cyan',
-    url: 'https://www.hackerrank.com/',
+    url: 'https://drive.google.com/file/d/1HVRzsBPnh3idCd_EKpVKRt5bBag4AuM_/view',
   },
   {
     id: 2,
@@ -155,7 +155,7 @@ export const certifications = [
     badge: 'C',
     type: 'University Course Completion',
     color: 'violet',
-    url: 'https://www.coursera.org/',
+    url: 'https://drive.google.com/file/d/16eEoX_VumfWsgF7zLNoJS9g3tctaVhgT/view',
   },
   {
     id: 3,
